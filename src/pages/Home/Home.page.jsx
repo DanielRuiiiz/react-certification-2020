@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
 import { useAuth } from '../../providers/Auth';
 import './Home.styles.css';
 
 function HomePage() {
   const history = useHistory();
-  const sectionRef = useRef(null);
   const { authenticated, logout } = useAuth();
 
   function deAuthenticate(event) {
@@ -16,7 +14,7 @@ function HomePage() {
   }
 
   return (
-    <section className="homepage" ref={sectionRef}>
+    <div>
       <h1>Hello stranger!</h1>
       {authenticated ? (
         <>
@@ -25,6 +23,7 @@ function HomePage() {
             <Link to="/" onClick={deAuthenticate}>
               ← logout
             </Link>
+            <Link to="/favorites">← favorites</Link>
             <span className="separator" />
             <Link to="/secret">show me something cool →</Link>
           </span>
@@ -32,7 +31,7 @@ function HomePage() {
       ) : (
         <Link to="/login">let me in →</Link>
       )}
-    </section>
+    </div>
   );
 }
 
