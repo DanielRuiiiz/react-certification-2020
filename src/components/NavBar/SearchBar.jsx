@@ -46,12 +46,13 @@ const useStyles = makeStyles((theme) => ({
 const SearchBar = ({ handleOnFormSubmit }) => {
   const [term, setTerm] = useState('');
   const onInputChange = (event) => {
-    const value = event.target;
+    const { value } = event.target;
     setTerm(value);
   };
 
   const onFormSubmit = (event) => {
-    event.prevetDefault();
+    console.log('onformSubmit', term);
+    event.preventDefault();
     handleOnFormSubmit(term);
   };
   const searchBarStyles = useStyles();
