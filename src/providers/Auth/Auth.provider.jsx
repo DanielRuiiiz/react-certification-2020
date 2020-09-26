@@ -13,6 +13,16 @@ function useAuth() {
   return context;
 }
 
+// export default async function loginApi(username, password) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       if (username === 'wizeline' && password === 'Rocks!') {
+//         return resolve(mockedUser);
+//       }
+//       return reject(new Error('Username or password invalid'));
+//     }, 500);
+//   });
+// }
 function AuthProvider({ children }) {
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -23,8 +33,24 @@ function AuthProvider({ children }) {
     setAuthenticated(isAuthenticated);
   }, []);
 
-  const login = useCallback(() => {
-    setAuthenticated(true);
+  const mockedUser = {
+    id: '123',
+    name: 'Wizeline',
+    avatarUrl:
+      'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+    favoriteList: [],
+  };
+  const updateUser = (favorites) => {
+    mockedUser.favoriteList = favorites;
+    console.log('updateUser', mockedUser.favoriteList);
+    return mockedUser;
+  };
+  const login = useCallback((username, password) => {
+    if (username === 'wizeline' && password === 'Rocks!') {
+      setAuthenticated(true);
+      return mockedUser;
+    }
+
     storage.set(AUTH_STORAGE_KEY, true);
   }, []);
 
@@ -34,7 +60,9 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, authenticated }}>
+    <AuthContext.Provider
+      value={{ login, logout, authenticated, updateUser, mockedUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -15,7 +15,7 @@ const getVideos = (search) => {
   return youtube.get('/search', {
     params: {
       q: search,
-      maxResults: 50,
+      maxResults: 5,
       type: 'Video',
     },
   });
