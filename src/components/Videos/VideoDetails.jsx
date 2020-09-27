@@ -7,7 +7,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import styled from 'styled-components';
 
-const VidDetails = styled(Card)`
+const VidDetails = styled('div')`
   width: 70%;
   height: 100%;
   position: relative;
@@ -15,34 +15,48 @@ const VidDetails = styled(Card)`
   flex-direction: column;
 `;
 
+const VidDetailsIframe = styled('iframe')`
+  width: 100%;
+  height: 500px;
+`;
+
+const VidDetailsTitle = styled('div')`
+  padding: 10px 30px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+`;
+
+const VidDetailsDescription = styled(Typography)`
+  padding: 0px 30px;
+  box-sizing: border-box;
+`;
 const VideoDetails = ({ video, handleFavoritesList, isFavorite }) => {
   if (!video) {
-    console.log('no video in video detalis');
     return null;
   }
   const onFavorited = (event) => {
     event.preventDefault();
     const wasFavorite = !isFavorite;
     handleFavoritesList(video, wasFavorite);
-    console.log(wasFavorite);
   };
 
-  console.log('isFaovrite', isFavorite);
   const videoSource = `https://www.youtube.com/embed/${video.id.videoId}`;
+
   return (
     <VidDetails>
-      <CardMedia component="div">
-        <iframe title="Video Player" src={videoSource} />
-      </CardMedia>
-      <CardContent>
+      <VidDetailsIframe alt="Video Player" src={videoSource} />
+      <VidDetailsTitle>
         <Typography variant="h6">
           {video.snippet.title}
           <IconButton onClick={onFavorited}>
             {isFavorite ? <BookmarkIcon /> : <BookmarkBorderOutlinedIcon />}
           </IconButton>
         </Typography>
-        <Typography wrap="nowrap">{video.snippet.description}</Typography>
-      </CardContent>
+      </VidDetailsTitle>
+      <VidDetailsDescription variant="body2" color="textSecondary" wrap="nowrap">
+        {video.snippet.description}
+      </VidDetailsDescription>
     </VidDetails>
   );
 };

@@ -12,11 +12,10 @@ const youtube = axios.create({
 });
 
 const getVideos = (search) => {
-  console.log('here1');
   return youtube.get('/search', {
     params: {
       q: search,
-      maxResults: 5,
+      maxResults: 25,
       type: 'Video',
     },
   });

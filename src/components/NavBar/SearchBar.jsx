@@ -51,7 +51,6 @@ const SearchBar = ({ handleOnFormSubmit }) => {
   };
 
   const onFormSubmit = (event) => {
-    console.log('onformSubmit', term);
     event.preventDefault();
     handleOnFormSubmit(term);
   };

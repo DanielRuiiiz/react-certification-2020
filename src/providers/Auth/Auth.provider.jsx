@@ -42,7 +42,6 @@ function AuthProvider({ children }) {
   };
   const updateUser = (favorites) => {
     mockedUser.favoriteList = favorites;
-    console.log('updateUser', mockedUser.favoriteList);
     return mockedUser;
   };
   const login = useCallback((username, password) => {

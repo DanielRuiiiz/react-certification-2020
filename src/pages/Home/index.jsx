@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper, Typography } from '@material-ui/core';
 // import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../providers/Auth';
 import getVideos from '../../providers/Youtube';
 import NavBar from '../../components/NavBar';
 import VideoList from '../../components/Videos';
+import VideoSelected from '../SelectedVideo';
 import './Home.styles.css';
-import VideoDetails from '../../components/Videos/VideoDetails';
 import styled from 'styled-components';
 
-const VideoSelectedDetails = styled(Grid)`
-  width: 30%;
-  height: 100%;
-  position: relative;
-  overflow: scroll;
+const Welcome = styled(Typography)`
+  text-align: center;
+  padding-top: 30px;
 `;
 const HomeStyle = styled('div')`
   -webkit-box-flex: 1;
@@ -64,30 +62,28 @@ const HomePage = () => {
   return (
     <HomeStyle>
       <NavBar handleFormSubmit={handleFormSubmit} />
-      <Grid container justify="flex-start">
-        {videos.length > 0 && (
-          <VideoDetails
-            video={selectedVideo}
-            handleFavoritesList={handleFavoritesList}
-            isFavorite={isFavorite}
-          />
-        )}
-        {videos.length > 0 ? (
-          Boolean(selectedVideo) ? (
-            <VideoSelectedDetails item xs={12}>
-              <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
-            </VideoSelectedDetails>
-          ) : (
-            <Grid item xs={12}>
-              <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
-            </Grid>
-          )
-        ) : (
-          <Grid item xs={3}>
-            Loading...
+      {Boolean(selectedVideo) ? (
+        <VideoSelected
+          videos={videos}
+          selectedVideo={selectedVideo}
+          handleFavoritesList={handleFavoritesList}
+          isFavorite={isFavorite}
+          onVideoSelect={handleVideoSelect}
+        />
+      ) : (
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Welcome variant="h2">{'Welcome'}</Welcome>
           </Grid>
-        )}
-      </Grid>
+          <Grid item xs={12}>
+            <VideoList
+              videos={videos}
+              onVideoSelect={handleVideoSelect}
+              isSelected={false}
+            />
+          </Grid>
+        </Grid>
+      )}
     </HomeStyle>
   );
 };
