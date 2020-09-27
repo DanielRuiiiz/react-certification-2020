@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Grid, Paper } from '@material-ui/core';
 // import { Link, useHistory } from 'react-router-dom';
@@ -8,9 +7,20 @@ import NavBar from '../../components/NavBar';
 import VideoList from '../../components/Videos';
 import './Home.styles.css';
 import VideoDetails from '../../components/Videos/VideoDetails';
+import styled from 'styled-components';
 
-function HomePage() {
-  // const history = useHistory();
+const VideoSelectedDetails = styled(Grid)`
+  width: 30%;
+  height: 100%;
+  position: relative;
+  overflow: scroll;
+`;
+const HomeStyle = styled('div')`
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  height: 100%;
+`;
+const HomePage = () => {
   const auth = useAuth();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -22,9 +32,9 @@ function HomePage() {
 
   const handleFormSubmit = async (searchTerm) => {
     setVideos([]);
-    // console.log(searchTerm);
     const res = await getVideos(searchTerm);
     setSearch(searchTerm);
+    setSelectedVideo(null);
     setVideos(res.data.items);
   };
 
@@ -38,7 +48,6 @@ function HomePage() {
   };
 
   const handleFavoritesList = (video, wasFavorited) => {
-    // console.log('handleFavoritesList', video, wasFavorited);
     let vids = [];
     if (wasFavorited) {
       vids = [...favoritedVideos, video];
@@ -47,49 +56,40 @@ function HomePage() {
         return vid.id.videoId !== video.id.videoId;
       });
     }
-    // console.log('wasFavoritedVids', vids);
     setFavoritedVideos(vids);
     auth.updateUser(vids);
     setFavorite(wasFavorited);
-    // console.log('homepage habdlefavoriteslist', isFavorite);
   };
-  // console.log('home is favorite', isFavorite);
+
   return (
-    <div style={{ marginTop: '1em' }}>
+    <HomeStyle>
       <NavBar handleFormSubmit={handleFormSubmit} />
-      <br />
-      <Grid
-        container
-        direction="cloumn"
-        justify="flex-start"
-        alignItems="center"
-        spacing={2}
-      >
+      <Grid container justify="flex-start">
+        {videos.length > 0 && (
+          <VideoDetails
+            video={selectedVideo}
+            handleFavoritesList={handleFavoritesList}
+            isFavorite={isFavorite}
+          />
+        )}
         {videos.length > 0 ? (
-          <Grid item xs={12}>
-            <Paper>
+          Boolean(selectedVideo) ? (
+            <VideoSelectedDetails item xs={12}>
               <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
-            </Paper>
-          </Grid>
+            </VideoSelectedDetails>
+          ) : (
+            <Grid item xs={12}>
+              <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
+            </Grid>
+          )
         ) : (
-          <Grid item xs={12}>
+          <Grid item xs={3}>
             Loading...
           </Grid>
         )}
-        {videos.length > 0 && (
-          <Grid item xs={12}>
-            <Paper>
-              <VideoDetails
-                video={selectedVideo}
-                handleFavoritesList={handleFavoritesList}
-                isFavorite={isFavorite}
-              />
-            </Paper>
-          </Grid>
-        )}
       </Grid>
-    </div>
+    </HomeStyle>
   );
-}
+};
 
 export default HomePage;

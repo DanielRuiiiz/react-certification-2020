@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Grid, Paper } from '@material-ui/core';
 import { useAuth } from '../../providers/Auth';
 import getVideos from '../../providers/Youtube';
@@ -8,6 +9,7 @@ import VideoDetails from '../../components/Videos/VideoDetails';
 
 const FavoritesPage = () => {
   const auth = useAuth();
+  const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
@@ -17,6 +19,7 @@ const FavoritesPage = () => {
   const [search, setSearch] = useState('');
 
   const handleFormSubmit = async (searchTerm) => {
+    history.redirect('/');
     setVideos([]);
     // console.log(searchTerm);
     const res = await getVideos(searchTerm);
@@ -60,27 +63,30 @@ const FavoritesPage = () => {
           direction="cloumn"
           justify="flex-start"
           alignItems="center"
-          spacing={2}
+          spacing={3}
         >
-          {videos && videos.length > 0 && (
+          {/* {videos.length > 0 && (
             <Grid item xs={12}>
               <Paper>
-                <VideoDetails
-                  isFavorite={isFavorite}
-                  handleFavoritesList={handleFavoritesList}
-                  video={selectedVideo}
-                />
+                <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
               </Paper>
+            </Grid>
+          )} */}
+          {videos.length > 0 && (
+            <Grid item xs={12}>
+              <VideoDetails
+                video={selectedVideo}
+                handleFavoritesList={handleFavoritesList}
+                isFavorite={isFavorite}
+              />
             </Grid>
           )}
           {auth.mockedUser.favoriteList.length > 0 ? (
             <Grid item xs={12}>
-              <Paper>
-                <VideoList
-                  videos={auth.mockedUser.favoriteList}
-                  onVideoSelect={handleVideoSelect}
-                />
-              </Paper>
+              <VideoList
+                videos={auth.mockedUser.favoriteList}
+                onVideoSelect={handleVideoSelect}
+              />
             </Grid>
           ) : (
             <Grid item xs={12}>

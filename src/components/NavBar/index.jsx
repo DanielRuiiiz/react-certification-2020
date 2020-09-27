@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = ({ handleFormSubmit }) => {
   const navBarClasses = useStyles();
   return (
-    <AppBar>
+    <AppBar position="static">
       <Toolbar edge="start">
         <BurgerMenu />
         <SearchBar handleOnFormSubmit={handleFormSubmit} />
