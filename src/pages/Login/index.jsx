@@ -26,12 +26,6 @@ function LoginPage() {
     history.push('/');
   };
 
-  // function authenticate(event) {
-  //   event.preventDefault();
-  //   auth.login();
-  //   history.push('/');
-  // }
-
   return (
     <section className="login">
       <h1>Welcome back!</h1>

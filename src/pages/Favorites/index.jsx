@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { useAuth } from '../../providers/Auth';
 import getVideos from '../../providers/Youtube';
 import NavBar from '../../components/NavBar';
@@ -14,9 +14,11 @@ const FavoriteStyle = styled('div')`
   height: 100%;
 `;
 
+const AlertWithMargin = styled(Alert)`
+  margin: 30px;
+`;
 const FavoritesPage = () => {
   const auth = useAuth();
-  const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
@@ -27,7 +29,6 @@ const FavoritesPage = () => {
   const authFavoriteList = auth.mockedUser.favoriteList;
 
   const handleFormSubmit = async (searchTerm) => {
-    history.push('/');
     setVideos([]);
     const res = await getVideos(searchTerm);
     setSearch(searchTerm);
@@ -65,9 +66,7 @@ const FavoritesPage = () => {
         />
       </Grid>
     ) : (
-      <Grid item xs={12}>
-        No Videos in Favorites Page yet!
-      </Grid>
+      <AlertWithMargin severity="info">No Videos in Favorites Page yet!</AlertWithMargin>
     );
   };
 
@@ -90,41 +89,3 @@ const FavoritesPage = () => {
 };
 
 export default FavoritesPage;
-
-/* <Grid
-container
-direction="cloumn"
-justify="flex-start"
-alignItems="center"
-spacing={3}
->
-{/* {videos.length > 0 && (
-    <Grid item xs={12}>
-      <Paper>
-        <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
-      </Paper>
-    </Grid>
-  )} }*/
-/*
-{videos.length > 0 && (
-  <Grid item xs={12}>
-    <VideoDetails
-      video={selectedVideo}
-      handleFavoritesList={handleFavoritesList}
-      isFavorite={isFavorite}
-    />
-  </Grid>
-)}
-{auth.mockedUser.favoriteList.length > 0 ? (
-  <Grid item xs={12}>
-    <VideoList
-      videos={auth.mockedUser.favoriteList}
-      onVideoSelect={handleVideoSelect}
-    />
-  </Grid>
-) : (
-  <Grid item xs={12}>
-    No Videos in Favorites Page yet!
-  </Grid>
-)}
-</Grid> */

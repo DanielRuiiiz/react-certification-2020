@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles';
@@ -14,7 +13,6 @@ const VidItem = styled(Card)`
   height: 345px;
   margin: 10px;
   display: flex;
-  padding: 20px;
   flex-flow: row wrap;
   &:hover:{ 
     backgroundColor:${fade('#FFFF', 0.2)}}`}
@@ -61,16 +59,17 @@ const VideoItem = ({ video, onVideoSelect, isSelected }) => {
               src={video.snippet.thumbnails.medium.url}
             />
             <CardContent>
-              <Typography variant="h6">{video.snippet.title}</Typography>
+              <Typography variant="body1" gutterBottom>
+                {video.snippet.title}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {video.snippet.description}
+              </Typography>
             </CardContent>
           </VidItem>
         </>
       )}
     </>
-
-    // <div onClick={() => onVideoSelect(video)}>
-    //   <img alt={video.snippet.title} src={video.snippet.thumbnails.medium.url} />
-    // </div>
   );
 };
 

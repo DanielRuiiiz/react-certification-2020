@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Paper, Typography } from '@material-ui/core';
-// import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Grid, Typography } from '@material-ui/core';
 import { useAuth } from '../../providers/Auth';
 import getVideos from '../../providers/Youtube';
 import NavBar from '../../components/NavBar';
@@ -26,7 +25,7 @@ const HomePage = () => {
   const [favoritedVideos, setFavoritedVideos] = useState(
     auth.mockedUser.favoriteList || []
   );
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('Eater');
 
   const handleFormSubmit = async (searchTerm) => {
     setVideos([]);
@@ -35,6 +34,17 @@ const HomePage = () => {
     setSelectedVideo(null);
     setVideos(res.data.items);
   };
+
+  useEffect(() => {
+    async function initialFormSubmit(searchTerm) {
+      setVideos([]);
+      const res = await getVideos(searchTerm);
+      setSearch(searchTerm);
+      setSelectedVideo(null);
+      setVideos(res.data.items);
+    }
+    initialFormSubmit(search);
+  }, [search]);
 
   const handleVideoSelect = (video) => {
     const isFavorite =

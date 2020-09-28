@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,8 +10,6 @@ import { useAuth } from '../../providers/Auth';
 import Breakpoints from '../../utils/breakpoints';
 
 const UserMenu = () => {
-  //TODO: Create a 'menu' to show 'login' or 'logout' depending on whether the user is authenticated
-  //TODO: Create the open/setOpen state to show the menu when you click on it
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -23,25 +21,22 @@ const UserMenu = () => {
   };
   const { authenticated, logout } = useAuth();
 
-  function deAuthenticate(event) {
+  const deAuthenticate = (event) => {
     event.preventDefault();
     logout();
     history.push('/');
     setAnchorEl(null);
-  }
+  };
+  const Authenticate = (event) => {
+    event.preventDefault();
+    history.push('/login');
+    setAnchorEl(null);
+  };
   const Profile = () => {
-    return (
-      <>
-        <Link to="/login">{'Login'}</Link>
-      </>
-    );
+    return <MenuItem onClick={Authenticate}>Login</MenuItem>;
   };
   const LogoutButton = () => {
-    return (
-      <>
-        <div onClick={deAuthenticate}> Logout </div>
-      </>
-    );
+    return <div onClick={deAuthenticate}> Logout </div>;
   };
   const ProfileMenu = () => {
     return (
