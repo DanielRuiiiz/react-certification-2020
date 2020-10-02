@@ -23,25 +23,30 @@ function AuthProvider({ children }) {
     setAuthenticated(isAuthenticated);
   }, []);
 
-  const mockedUser = {
+  const [user, setUser] = useState({
     id: '123',
     name: 'Wizeline',
     avatarUrl:
       'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
     favoriteList: [],
-  };
+  });
   const updateUser = (favorites) => {
-    mockedUser.favoriteList = favorites;
-    return mockedUser;
+    setUser({
+      ...user,
+      favorites,
+    });
   };
-  const login = useCallback((username, password) => {
-    if (username === 'wizeline' && password === 'Rocks!') {
-      setAuthenticated(true);
-      return mockedUser;
-    }
+  const login = useCallback(
+    (username, password) => {
+      if (username === 'wizeline' && password === 'Rocks!') {
+        setAuthenticated(true);
+        return user;
+      }
 
-    storage.set(AUTH_STORAGE_KEY, true);
-  }, []);
+      storage.set(AUTH_STORAGE_KEY, true);
+    },
+    [user]
+  );
 
   const logout = useCallback(() => {
     setAuthenticated(false);
@@ -49,9 +54,7 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ login, logout, authenticated, updateUser, mockedUser }}
-    >
+    <AuthContext.Provider value={{ login, logout, authenticated, updateUser, user }}>
       {children}
     </AuthContext.Provider>
   );

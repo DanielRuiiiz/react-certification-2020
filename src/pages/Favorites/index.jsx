@@ -22,11 +22,9 @@ const FavoritesPage = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
-  const [favoritedVideos, setFavoritedVideos] = useState(
-    auth.mockedUser.favoriteList || []
-  );
+  const [favoritedVideos, setFavoritedVideos] = useState(auth.user.favoriteList || []);
   const [search, setSearch] = useState('');
-  const authFavoriteList = auth.mockedUser.favoriteList;
+  const authFavoriteList = auth.user.favoriteList;
 
   const handleFormSubmit = async (searchTerm) => {
     setVideos([]);

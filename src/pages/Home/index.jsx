@@ -22,9 +22,7 @@ const HomePage = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
-  const [favoritedVideos, setFavoritedVideos] = useState(
-    auth.mockedUser.favoriteList || []
-  );
+  const [favoritedVideos, setFavoritedVideos] = useState(auth.user.favoriteList || []);
   const [search, setSearch] = useState('Eater');
 
   const handleFormSubmit = async (searchTerm) => {
