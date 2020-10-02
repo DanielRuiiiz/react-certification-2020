@@ -8,14 +8,14 @@ const youtube = axios.create({
   },
 });
 
-const getVideos = (search) => {
+const getRelatedVideos = (id) => {
   return youtube.get('/search', {
     params: {
-      q: search,
       maxResults: 25,
       type: 'video',
+      relatedToVideoId: id,
     },
   });
 };
 
-export default getVideos;
+export default getRelatedVideos;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Grid, Typography } from '@material-ui/core';
 import { useAuth } from '../../providers/Auth';
 import getVideos from '../../providers/Youtube';
@@ -19,6 +20,7 @@ const HomeStyle = styled('div')`
 `;
 const HomePage = () => {
   const auth = useAuth();
+  const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
@@ -45,12 +47,13 @@ const HomePage = () => {
   }, [search]);
 
   const handleVideoSelect = (video) => {
-    const isFavorite =
+    const isFavorited =
       favoritedVideos.filter((vid) => {
         return vid.id.videoId === video.id.videoId;
       }).length > 0;
-    setFavorite(isFavorite);
+    setFavorite(isFavorited);
     setSelectedVideo(video);
+    //history.push(`/${video.id.videoId}`);
   };
 
   const handleFavoritesList = (video, wasFavorited) => {
@@ -66,7 +69,8 @@ const HomePage = () => {
     auth.updateUser(vids);
     setFavorite(wasFavorited);
   };
-
+  console.log('home sleected videos', selectedVideo);
+  console.log('home videos', videos);
   return (
     <HomeStyle>
       <NavBar handleFormSubmit={handleFormSubmit} />
@@ -97,3 +101,30 @@ const HomePage = () => {
 };
 
 export default HomePage;
+{
+  /* <HomeStyle>
+<NavBar handleFormSubmit={handleFormSubmit} />
+{Boolean(selectedVideo) ? (
+  <VideoSelected
+    videos={videos}
+    selectedVideo={selectedVideo}
+    handleFavoritesList={handleFavoritesList}
+    isFavorite={isFavorite}
+    onVideoSelect={handleVideoSelect}
+  />
+) : (
+  <Grid container spacing={3}>
+    <Grid item xs={12}>
+      <Welcome variant="h2">{'Welcome'}</Welcome>
+    </Grid>
+    <Grid item xs={12}>
+      <VideoList
+        videos={videos}
+        onVideoSelect={handleVideoSelect}
+        isSelected={false}
+      />
+    </Grid>
+  </Grid>
+)}
+</HomeStyle> */
+}

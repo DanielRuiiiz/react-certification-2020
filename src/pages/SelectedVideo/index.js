@@ -17,6 +17,7 @@ const VideoSelectedDetails = styled(Grid)`
   position: relative;
   overflow: scroll;
 `;
+
 const VideoSelected = ({
   videos,
   selectedVideo,
@@ -24,6 +25,13 @@ const VideoSelected = ({
   isFavorite,
   onVideoSelect,
 }) => {
+  console.log(
+    'calling videoSelected component',
+    videos,
+    selectedVideo,
+    isFavorite,
+    onVideoSelect
+  );
   return (
     <SelectedVideo>
       {videos.length > 0 && (

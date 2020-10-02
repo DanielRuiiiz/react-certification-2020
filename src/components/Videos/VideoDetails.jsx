@@ -36,9 +36,10 @@ const VideoDetails = ({ video, handleFavoritesList, isFavorite }) => {
     event.preventDefault();
     const wasFavorite = !isFavorite;
     handleFavoritesList(video, wasFavorite);
+    isFavorite = wasFavorite;
   };
+  console.log('video details ', video);
   const videoSource = `https://www.youtube.com/embed/${video.id.videoId}`;
-
   return (
     <VidDetails>
       <VidDetailsIframe alt="Video Player" src={videoSource} />
