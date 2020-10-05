@@ -51,14 +51,14 @@ const UserMenu = () => {
       {(matches) =>
         matches ? (
           <>
-            <IconButton onClick={handleClick}>
+            <IconButton onClick={handleClick} alt="User Logo">
               <AccountCircle />
             </IconButton>
             <ProfileMenu />
           </>
         ) : (
           <>
-            <IconButton onClick={handleClick}>
+            <IconButton onClick={handleClick} alt="More Logo Mobile">
               <MoreIcon />
             </IconButton>
             <ProfileMenu />

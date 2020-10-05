@@ -101,30 +101,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-{
-  /* <HomeStyle>
-<NavBar handleFormSubmit={handleFormSubmit} />
-{Boolean(selectedVideo) ? (
-  <VideoSelected
-    videos={videos}
-    selectedVideo={selectedVideo}
-    handleFavoritesList={handleFavoritesList}
-    isFavorite={isFavorite}
-    onVideoSelect={handleVideoSelect}
-  />
-) : (
-  <Grid container spacing={3}>
-    <Grid item xs={12}>
-      <Welcome variant="h2">{'Welcome'}</Welcome>
-    </Grid>
-    <Grid item xs={12}>
-      <VideoList
-        videos={videos}
-        onVideoSelect={handleVideoSelect}
-        isSelected={false}
-      />
-    </Grid>
-  </Grid>
-)}
-</HomeStyle> */
-}
