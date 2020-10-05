@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import BurgerMenu from './BurgerMenu';
 import SearchBar from './SearchBar';
 import UserMenu from './UserMenu';
-
+import { useAuth } from '../../providers/Auth';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -13,13 +13,14 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = ({ handleFormSubmit }) => {
   const navBarClasses = useStyles();
+  const { authenticated } = useAuth();
   return (
-    <AppBar position="static">
+    <AppBar position="static" data-testid="nav-bar">
       <Toolbar edge="start">
-        <BurgerMenu />
+        <BurgerMenu authenticated={authenticated} />
         <SearchBar handleOnFormSubmit={handleFormSubmit} />
         <div className={navBarClasses.grow} />
-        <UserMenu />
+        <UserMenu authenticated={authenticated} />
       </Toolbar>
     </AppBar>
   );

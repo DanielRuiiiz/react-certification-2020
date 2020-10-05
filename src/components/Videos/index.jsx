@@ -38,9 +38,9 @@ const VideoList = ({ videos, onVideoSelect, isSelected }) => {
   return (
     <>
       {Boolean(isSelected) ? (
-        <div>{listVideos}</div>
+        <div data-testid="selected">{listVideos}</div>
       ) : (
-        <CardWrapper>{listVideos}</CardWrapper>
+        <CardWrapper data-testid="not-selected">{listVideos}</CardWrapper>
       )}
       ;
     </>

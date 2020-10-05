@@ -34,7 +34,7 @@ function LoginPage() {
 
   return (
     <LoginStyle>
-      <section className="login">
+      <section className="login" data-testid="login">
         <h1>Welcome back!</h1>
         <form onSubmit={myAuthenticate} className="login-form">
           <div className="form-group">

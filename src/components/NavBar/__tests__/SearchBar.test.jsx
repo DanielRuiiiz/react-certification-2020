@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { MemoryRouter as Router, Route } from 'react-router-dom';
 import SearchBar from '../SearchBar';
-
-const renderComponent = (deviceWidth) =>
+import userEvent from '@testing-library/user-event';
+const renderComponent = () =>
   render(
     <Router initialIndex={0} initialEntries={['/']}>
       <Route path="/">
@@ -13,12 +13,15 @@ const renderComponent = (deviceWidth) =>
   );
 
 describe('<SearchBar />', () => {
-  jest.mock('react-router-dom', () => ({
-    useHistory: () => ({
-      push: jest.fn(),
-    }),
-  }));
   it('should display the SearchBar', () => {
-    return true;
+    const { queryByTestId } = renderComponent();
+    const SearchBar = queryByTestId('search-bar');
+    expect(SearchBar).toBeInTheDocument();
+  });
+  it('should be empty at the start', () => {
+    const { getByTestId } = renderComponent();
+    const SearchInput = getByTestId('search-input');
+    expect(SearchInput).toBeInTheDocument();
+    expect(SearchInput).toBeEmptyDOMElement();
   });
 });

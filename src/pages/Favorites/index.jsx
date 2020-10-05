@@ -64,12 +64,14 @@ const FavoritesPage = () => {
         />
       </Grid>
     ) : (
-      <AlertWithMargin severity="info">No Videos in Favorites Page yet!</AlertWithMargin>
+      <AlertWithMargin severity="info" data-testid="no-videos">
+        No Videos in Favorites Page yet!
+      </AlertWithMargin>
     );
   };
 
   return (
-    <FavoriteStyle>
+    <FavoriteStyle data-testid="favorites">
       <NavBar handleFormSubmit={handleFormSubmit} />
       {Boolean(selectedVideo) && authFavoriteList.length > 0 ? (
         <VideoSelected

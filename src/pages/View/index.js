@@ -36,9 +36,7 @@ const ViewPage = () => {
       const res = await getVideos(searchTerm);
       setSelectedVideo(res.data.items[0]);
       const relatedVideos = await getRelatedVideos(id);
-      console.log(relatedVideos.data.items);
       const allVideos = res.data.items.concat(relatedVideos.data.items);
-      console.log(allVideos);
       setSearch(searchTerm);
       setVideos(allVideos);
     }

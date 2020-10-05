@@ -1,24 +1,24 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter as Router, Route } from 'react-router-dom';
-import Login from '../index';
+import LoginPage from '../index';
+import AuthProvider from '../../../providers/Auth';
 
 const renderComponent = () =>
   render(
-    <Router initialIndex={0} initialEntries={['/']}>
-      <Route path={'/login'}>
-        <Login />
-      </Route>
-    </Router>
+    <AuthProvider>
+      <Router initialIndex={0} initialEntries={['/']}>
+        <Route path={'/'}>
+          <LoginPage />
+        </Route>
+      </Router>
+    </AuthProvider>
   );
 
 describe('<Login />', () => {
-  jest.mock('react-router-dom', () => ({
-    useHistory: () => ({
-      push: jest.fn(),
-    }),
-  }));
-  it('Should authenticate when passed correct username and password', () => {
-    return true;
+  it('Should render the login propmt', () => {
+    const { queryByTestId } = renderComponent();
+    expect(queryByTestId('login')).toBeInTheDocument();
   });
+  //dont know how to test routes correctly or how to submit forms failed with searchbar
 });

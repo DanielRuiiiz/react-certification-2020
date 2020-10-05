@@ -9,7 +9,7 @@ import MediaQuery from 'react-responsive';
 import { useAuth } from '../../providers/Auth';
 import Breakpoints from '../../utils/breakpoints';
 
-const UserMenu = () => {
+const UserMenu = ({ authenticated, testDeviceWidth }) => {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -19,7 +19,7 @@ const UserMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { authenticated, logout } = useAuth();
+  const { logout } = useAuth();
 
   const deAuthenticate = (event) => {
     event.preventDefault();
@@ -33,10 +33,18 @@ const UserMenu = () => {
     setAnchorEl(null);
   };
   const Profile = () => {
-    return <MenuItem onClick={Authenticate}>Login</MenuItem>;
+    return (
+      <MenuItem onClick={Authenticate} data-testid="log-in">
+        Login
+      </MenuItem>
+    );
   };
   const LogoutButton = () => {
-    return <div onClick={deAuthenticate}> Logout </div>;
+    return (
+      <div onClick={deAuthenticate} data-testid="log-out">
+        Logout
+      </div>
+    );
   };
   const ProfileMenu = () => {
     return (
@@ -45,20 +53,19 @@ const UserMenu = () => {
       </Menu>
     );
   };
-
   return (
-    <MediaQuery minWidth={Breakpoints.medium}>
+    <MediaQuery minWidth={Breakpoints.medium} values={testDeviceWidth}>
       {(matches) =>
         matches ? (
           <>
-            <IconButton onClick={handleClick} alt="User Logo">
+            <IconButton onClick={handleClick} data-testid="user-menu">
               <AccountCircle />
             </IconButton>
             <ProfileMenu />
           </>
         ) : (
           <>
-            <IconButton onClick={handleClick} alt="More Logo Mobile">
+            <IconButton onClick={handleClick} data-testid="mobile-menu">
               <MoreIcon />
             </IconButton>
             <ProfileMenu />

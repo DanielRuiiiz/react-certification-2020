@@ -1,29 +1,35 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter as Router, Route } from 'react-router-dom';
 import UserMenu from '../UserMenu';
+import AuthProvider from '../../../providers/Auth';
 
-const renderComponent = (deviceWidth) =>
+const renderComponent = (authenticated) =>
   render(
-    <Router initialIndex={0} initialEntries={['/']}>
-      <Route path="/">
-        <UserMenu />
-      </Route>
-    </Router>
+    <AuthProvider>
+      <Router initialIndex={0} initialEntries={['/']}>
+        <Route path="/">
+          <UserMenu authenticated={authenticated} />
+        </Route>
+      </Router>
+    </AuthProvider>
   );
 
 describe('<UserMenu />', () => {
-  jest.mock('react-router-dom', () => ({
-    useHistory: () => ({
-      push: jest.fn(),
-    }),
-  }));
-  it('should render the normal user logo when given bigger than mobile dimensions', () => {
-    const { queryByAltText } = renderComponent({ deviceWidth: 1400 });
-    expect(queryByAltText('User Logo')).toBeInTheDocument();
+  it('should render the login button when not logged in', () => {
+    const { getByTestId, queryByTestId } = renderComponent(false);
+
+    const userMenu = getByTestId('mobile-menu');
+    fireEvent.click(userMenu);
+
+    expect(queryByTestId('log-in')).toBeInTheDocument();
   });
-  it('should render the more logo when given mobile dimensions', () => {
-    const { queryByAltText } = renderComponent({ deviceWidth: 375 });
-    expect(queryByAltText('More Logo Mobile')).toBeInTheDocument();
+  it('should render the logout button when logged in, ', () => {
+    const { getByTestId, queryByTestId } = renderComponent(true);
+
+    const userMenu = getByTestId('mobile-menu');
+    fireEvent.click(userMenu);
+
+    expect(queryByTestId('log-out')).toBeInTheDocument();
   });
 });

@@ -3,28 +3,35 @@ import { render } from '@testing-library/react';
 import { MemoryRouter as Router, Route } from 'react-router-dom';
 import VideoDetails from '../VideoDetails';
 
-const renderComponent = ({ video, handleFavoritesList, isFavorite }) =>
+const renderComponent = (video, handleFavoritesList, isFavorite) =>
   render(
     <Router initialIndex={0} initialEntries={['/']}>
       <Route path={'/'}>
-        <VideoDetails video={''} onVideoSelect={() => {}} isSelected={false} />
+        <VideoDetails
+          video={video}
+          handleFavoritesList={handleFavoritesList}
+          isFavorite={isFavorite}
+        />
       </Route>
     </Router>
   );
 
+const mockVideo = {
+  kind: 'mockedyoutube',
+  etag: 'mockedetag',
+  id: { kind: 'mockedVideo', videoId: '123' },
+  snippet: { title: 'hi', description: 'hello' },
+};
+const mockedVideos = [mockVideo, mockVideo];
 describe('<VideoDetails />', () => {
-  jest.mock('react-router-dom', () => ({
-    useHistory: () => ({
-      push: jest.fn(),
-    }),
-  }));
-  it('Should render VideoDetails', () => {
-    return true;
+  //video-details bookmark outlined-bookmark
+  it('Should render VideoDetails, with outlined-bookmark', () => {
+    const { queryByTestId } = renderComponent(mockVideo, mockedVideos, false);
+    expect(queryByTestId('video-details')).toBeInTheDocument();
+    expect(queryByTestId('outlined-bookmark')).toBeInTheDocument();
   });
   it('Should render BookmarkIcon if isFavorite is true', () => {
-    return true;
-  });
-  it('Should render BookmarkBorderOutlinedIcon if isFavorite is false', () => {
-    return true;
+    const { queryByTestId } = renderComponent(mockVideo, mockedVideos, true);
+    expect(queryByTestId('video-details')).toBeInTheDocument();
   });
 });

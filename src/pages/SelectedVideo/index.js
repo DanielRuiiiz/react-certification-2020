@@ -25,13 +25,6 @@ const VideoSelected = ({
   isFavorite,
   onVideoSelect,
 }) => {
-  console.log(
-    'calling videoSelected component',
-    videos,
-    selectedVideo,
-    isFavorite,
-    onVideoSelect
-  );
   return (
     <SelectedVideo>
       {videos.length > 0 && (
@@ -42,7 +35,7 @@ const VideoSelected = ({
         />
       )}
       {videos.length > 0 ? (
-        <VideoSelectedDetails item>
+        <VideoSelectedDetails item data-testid="video-selected-details">
           <VideoList videos={videos} onVideoSelect={onVideoSelect} isSelected={true} />
         </VideoSelectedDetails>
       ) : null}

@@ -39,7 +39,7 @@ const VideoItem = ({ video, onVideoSelect, isSelected }) => {
     <>
       {isSelected ? (
         <>
-          <SelectedVidItem onClick={() => onVideoSelect(video)}>
+          <SelectedVidItem onClick={() => onVideoSelect(video)} data-testid="selected">
             <SelectedSearchVidImg
               alt={video.snippet.title}
               src={video.snippet.thumbnails.medium.url}
@@ -52,7 +52,7 @@ const VideoItem = ({ video, onVideoSelect, isSelected }) => {
         </>
       ) : (
         <>
-          <VidItem onClick={() => onVideoSelect(video)}>
+          <VidItem onClick={() => onVideoSelect(video)} data-testid="not-selected">
             <CardMedia
               component="img"
               image={video.snippet.thumbnails.medium.url}

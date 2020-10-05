@@ -69,10 +69,9 @@ const HomePage = () => {
     auth.updateUser(vids);
     setFavorite(wasFavorited);
   };
-  console.log('home sleected videos', selectedVideo);
-  console.log('home videos', videos);
+
   return (
-    <HomeStyle>
+    <HomeStyle data-testid="home">
       <NavBar handleFormSubmit={handleFormSubmit} />
       {Boolean(selectedVideo) ? (
         <VideoSelected
@@ -81,6 +80,7 @@ const HomePage = () => {
           handleFavoritesList={handleFavoritesList}
           isFavorite={isFavorite}
           onVideoSelect={handleVideoSelect}
+          data-testid="selected"
         />
       ) : (
         <Grid container spacing={3}>
@@ -92,6 +92,7 @@ const HomePage = () => {
               videos={videos}
               onVideoSelect={handleVideoSelect}
               isSelected={false}
+              data-testid="not-selected"
             />
           </Grid>
         </Grid>

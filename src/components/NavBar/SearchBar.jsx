@@ -56,8 +56,8 @@ const SearchBar = ({ handleOnFormSubmit }) => {
   const searchBarStyles = useStyles();
 
   return (
-    <div className={searchBarStyles.search}>
-      <form onSubmit={onFormSubmit}>
+    <div className={searchBarStyles.search} data-testid="search-bar">
+      <form onSubmit={onFormSubmit} data-testid="submit">
         <div className={searchBarStyles.searchIcon}>
           <SearchIcon />
         </div>
@@ -67,7 +67,7 @@ const SearchBar = ({ handleOnFormSubmit }) => {
             root: searchBarStyles.inputRoot,
             input: searchBarStyles.inputInput,
           }}
-          inputProps={{ 'aria-label': 'search' }}
+          inputProps={{ 'aria-label': 'search', 'data-testid': 'search-input' }}
           onChange={onInputChange}
         />
       </form>

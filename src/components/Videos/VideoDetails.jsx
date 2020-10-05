@@ -38,16 +38,19 @@ const VideoDetails = ({ video, handleFavoritesList, isFavorite }) => {
     handleFavoritesList(video, wasFavorite);
     isFavorite = wasFavorite;
   };
-  console.log('video details ', video);
   const videoSource = `https://www.youtube.com/embed/${video.id.videoId}`;
   return (
-    <VidDetails>
+    <VidDetails data-testid="video-details">
       <VidDetailsIframe alt="Video Player" src={videoSource} />
       <VidDetailsTitle>
         <Typography variant="h6">
           {video.snippet.title}
           <IconButton onClick={onFavorited}>
-            {isFavorite ? <BookmarkIcon /> : <BookmarkBorderOutlinedIcon />}
+            {isFavorite ? (
+              <BookmarkIcon data-testid="bookmark" />
+            ) : (
+              <BookmarkBorderOutlinedIcon data-testid="outlined-bookmark" />
+            )}
           </IconButton>
         </Typography>
       </VidDetailsTitle>
