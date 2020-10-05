@@ -23,30 +23,25 @@ function AuthProvider({ children }) {
     setAuthenticated(isAuthenticated);
   }, []);
 
-  const [user, setUser] = useState({
+  const user = {
     id: '123',
     name: 'Wizeline',
     avatarUrl:
       'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
     favoriteList: [],
-  });
-  const updateUser = (favorites) => {
-    setUser({
-      ...user,
-      favorites,
-    });
   };
-  const login = useCallback(
-    (username, password) => {
-      if (username === 'wizeline' && password === 'Rocks!') {
-        setAuthenticated(true);
-        return user;
-      }
+  const updateUser = (favorites) => {
+    user.favoriteList = favorites;
+    return user;
+  };
+  const login = useCallback((username, password) => {
+    if (username === 'wizeline' && password === 'Rocks!') {
+      setAuthenticated(true);
+      return user;
+    }
 
-      storage.set(AUTH_STORAGE_KEY, true);
-    },
-    [user]
-  );
+    storage.set(AUTH_STORAGE_KEY, true);
+  }, []);
 
   const logout = useCallback(() => {
     setAuthenticated(false);

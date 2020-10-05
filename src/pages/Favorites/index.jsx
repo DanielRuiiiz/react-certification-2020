@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import { useAuth } from '../../providers/Auth';
 import getVideos from '../../providers/Youtube';
@@ -19,6 +20,7 @@ const AlertWithMargin = styled(Alert)`
 `;
 const FavoritesPage = () => {
   const auth = useAuth();
+  const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
@@ -31,6 +33,7 @@ const FavoritesPage = () => {
     const res = await getVideos(searchTerm);
     setSearch(searchTerm);
     setVideos(res.data.items);
+    history.push('/');
   };
 
   const handleVideoSelect = (video) => {

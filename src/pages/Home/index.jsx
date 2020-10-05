@@ -69,7 +69,6 @@ const HomePage = () => {
     auth.updateUser(vids);
     setFavorite(wasFavorited);
   };
-
   return (
     <HomeStyle data-testid="home">
       <NavBar handleFormSubmit={handleFormSubmit} />
