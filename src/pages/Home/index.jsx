@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Grid, Typography } from '@material-ui/core';
 import { useAuth } from '../../providers/Auth';
 import getVideos from '../../providers/Youtube';
@@ -20,7 +19,6 @@ const HomeStyle = styled('div')`
 `;
 const HomePage = () => {
   const auth = useAuth();
-  const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);

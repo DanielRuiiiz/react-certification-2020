@@ -19,6 +19,12 @@ describe('<HomePage />', () => {
     const { queryByTestId } = renderComponent();
     expect(queryByTestId('home')).toBeInTheDocument();
   });
+  it('Should render the NavBar', () => {
+    const { queryByTestId } = renderComponent();
+    expect(queryByTestId('menu-icon')).toBeInTheDocument();
+    expect(queryByTestId('search-bar')).toBeInTheDocument();
+    expect(queryByTestId('mobile-menu')).toBeInTheDocument();
+  });
   it('Should render VideoList if is isSelected is false', () => {
     const { queryByTestId } = renderComponent();
     expect(queryByTestId('not-selected')).toBeInTheDocument();
